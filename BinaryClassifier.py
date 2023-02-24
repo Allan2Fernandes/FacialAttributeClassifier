@@ -1,28 +1,25 @@
 import tensorflow as tf
-from keras.applications import MobileNetV3Large
+from keras.applications import EfficientNetV2S
 from keras.layers import Dense, Flatten
 
 class BinaryClassifier:
-    def __init__(self, target_size):
-        self.prebuilt_model = MobileNetV3Large(
-                            input_shape=target_size,
-                            alpha=1.0,
-                            minimalistic=False,
-                            include_top=False,
-                            weights="imagenet",
-                            input_tensor=None,
-                            classes=2,
-                            pooling=None,
-                            dropout_rate=0.2,
-                            classifier_activation="sigmoid",
-                            include_preprocessing=False,
-                        )
+    def __init__(self, target_shape):
+        self.prebuilt_model = EfficientNetV2S(
+            include_top=False,
+            weights=None,
+            input_tensor=None,
+            input_shape=target_shape,
+            pooling=None,
+            classes=1000,
+            classifier_activation="softmax",
+            include_preprocessing=False,
+        )
 
         pass
 
 
     def build_model(self):
-        self.prebuilt_model.trainable = False
+        self.prebuilt_model.trainable = True
         input_layer = self.prebuilt_model.input
         flatten_layer = Flatten()(self.prebuilt_model.output)
         classification_layer = Dense(units=1, activation='sigmoid')(flatten_layer)
