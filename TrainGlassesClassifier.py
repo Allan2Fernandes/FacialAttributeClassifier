@@ -35,7 +35,7 @@ classifier_builder.compile_model()
 classifier = classifier_builder.get_model()
 
 def validation_callback(epoch, logs=None):
-    tf.keras.models.save_model(classifier, f"EyeGlassesModels/Epoch{epoch+1}.h5")
+    tf.keras.models.save_model(classifier, f"EyeGlassesModels2/Epoch{epoch+1}.h5")
     pass
 
 my_callback = callbacks.LambdaCallback(on_epoch_end=validation_callback)
